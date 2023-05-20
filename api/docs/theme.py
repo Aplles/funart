@@ -61,3 +61,39 @@ THEME_BY_CATEGORY_LIST_VIEW = {
         )
     },
 }
+
+THEME_LIST_VIEW = {
+    "operation_id": "Список тематик",
+    "operation_description": """
+        Выводит список всех тематик
+
+        page - номер страницы (по умолчанию 1)
+        per_page - сколько элементов на странице (по умолчанию 8)
+    """,
+    'manual_parameters': [
+        openapi.Parameter('page', openapi.IN_QUERY,
+                          description="Вы можете указать номер страницы, с которой хотите получить данные",
+                          type=openapi.TYPE_NUMBER,
+                          required=False),
+        openapi.Parameter('per_page', openapi.IN_QUERY,
+                          description="Вы можете выбрать количество тематик на странице",
+                          type=openapi.TYPE_NUMBER,
+                          required=False),
+    ],
+    "responses": {
+        status.HTTP_200_OK: openapi.Response(
+            "Success",
+            openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties=dict(
+                    themes=openapi.Schema(
+                        type=openapi.TYPE_ARRAY,
+                        **THEME_ITEM
+                    ),
+                    page_data=openapi.Schema(type=openapi.TYPE_STRING, example='"[\"1\"]"'),
+                    page_info=PAGINATOR_INFO,
+                ),
+            ),
+        )
+    },
+}
