@@ -9,7 +9,7 @@ class Theme(models.Model):
     rating = models.IntegerField(default=0, verbose_name="Посещаемость")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-    category = models.ForeignKey(to='User', on_delete=models.CASCADE,
+    category = models.ForeignKey(to='Category', on_delete=models.CASCADE,
                                  related_name='categories', verbose_name='Категория')
 
     class Meta:
