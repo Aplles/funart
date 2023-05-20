@@ -1,8 +1,10 @@
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from service_objects.services import ServiceOutcome
 
+from api.docs.theme import THEME_BY_CATEGORY_LIST_VIEW
 from api.services.theme.category.list import ThemeListByCategoryService
 from api.services.theme.list import ThemeListServices
 from api.serializers.theme.list import ThemeListSerializer
@@ -24,6 +26,7 @@ class ThemeListView(APIView):
 
 class ThemeListByCategoryView(APIView):
 
+    @swagger_auto_schema(**THEME_BY_CATEGORY_LIST_VIEW)
     def get(self, request, *args, **kwargs):
         outcome = ServiceOutcome(ThemeListByCategoryService, request.GET.dict() | kwargs)
         return Response({
