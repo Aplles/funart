@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from service_objects.services import ServiceOutcome
 
 from api.serializers.theme.list import ThemeListSerializer
-from api.services.theme.list import ThemeListService
+from api.services.theme.category.list import ThemeListService
 
 
 class ThemeListView(APIView):
