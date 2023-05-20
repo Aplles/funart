@@ -4,7 +4,7 @@ from api.serializers.category.list import CategoryListSerializer
 
 
 class ThemeListSerializer(serializers.ModelSerializer):
-    category = CategoryListSerializer(read_only=False)
+    category = CategoryListSerializer(read_only=True)
 
     class Meta:
         model = Theme
