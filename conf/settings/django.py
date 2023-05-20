@@ -45,7 +45,12 @@ INSTALLED_APPS = [
     'models_app.apps.ModelsAppConfig',
     "rest_framework",
     'service_objects',
+    "drf_yasg",
 ]
+
+BASE_DOMAIN = (
+    f"{env('SCHEMA', default='http')}://{env('DOMAIN', default='localhost:8000')}"
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

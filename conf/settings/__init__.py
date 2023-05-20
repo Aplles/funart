@@ -6,6 +6,7 @@ settings = [
     "rest_framework.py",  # rest-framework settings
     "celery.py",  # celery settings
     "redis.py",  # redis settings
+    "swagger.py",  # swagger settings
 ]
 
 # Include settings:

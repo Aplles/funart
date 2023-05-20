@@ -1,8 +1,8 @@
 from django.urls import path
 
-from api.views.theme import ThemeListView
+
+from api.views.theme import ThemeListView, ThemeListByCategoryView
 from api.views.category import CategoryListView
-from api.views.theme import ThemeListByCategoryView
 from api.views.coloring import ColoringListView, ColoringListBySearchView
 
 urlpatterns = [
