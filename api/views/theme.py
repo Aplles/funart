@@ -4,13 +4,13 @@ from rest_framework.views import APIView
 from service_objects.services import ServiceOutcome
 
 from api.serializers.theme.list import ThemeListSerializer
-from api.services.theme.category.list import ThemeListService
+from api.services.theme.category.list import ThemeListByCategoryService
 
 
-class ThemeListView(APIView):
+class ThemeListByCategoryView(APIView):
 
     def get(self, request, *args, **kwargs):
-        outcome = ServiceOutcome(ThemeListService, request.GET.dict() | kwargs)
+        outcome = ServiceOutcome(ThemeListByCategoryService, request.GET.dict() | kwargs)
         return Response({
             "themes": ThemeListSerializer(outcome.result["object_list"], many=True).data,
             'page_data': outcome.result.get('page_range'),

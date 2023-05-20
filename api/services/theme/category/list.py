@@ -8,7 +8,7 @@ from models_app.models import Theme
 from django import forms
 
 
-class ThemeListService(ServiceWithResult):
+class ThemeListByCategoryService(ServiceWithResult):
     id = forms.IntegerField()
     page = forms.IntegerField(required=False, min_value=1)
     per_page = forms.IntegerField(required=False, min_value=1)
