@@ -12,9 +12,11 @@ django-service-objects = {editable = true, git = "https://github.com/dvkurbatov/
 pillow = "*"
 pipenv = "*"
 djangorestframework = "==3.13.1"
+celery = "*"
+redis = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.10"
-        
