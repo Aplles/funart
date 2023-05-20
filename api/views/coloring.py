@@ -4,10 +4,10 @@ from rest_framework.views import APIView
 from service_objects.services import ServiceOutcome
 
 from api.serializers.theme.list import ThemeListSerializer
-from api.services.coloring.list import ThemeListService
+from api.services.theme.list import ThemeListService
 
 
-class ColoringListView(APIView):
+class ThemeListView(APIView):
 
     def get(self, request, *args, **kwargs):
         outcome = ServiceOutcome(ThemeListService, request.GET.dict() | kwargs)
