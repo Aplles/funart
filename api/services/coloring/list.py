@@ -1,11 +1,12 @@
 import json
+from functools import lru_cache
 
 from django import forms
 from django.core.paginator import Paginator
 from service_objects.services import ServiceWithResult
 
 from conf.settings.rest_framework import REST_FRAMEWORK
-from models_app.models import Coloring
+from models_app.models import Coloring, Theme
 
 
 class ColoringListServices(ServiceWithResult):
@@ -15,6 +16,7 @@ class ColoringListServices(ServiceWithResult):
 
     def process(self):
         self._paginated_colorings()
+        self._update_rating()
         return self
 
     def _paginated_colorings(self):
@@ -37,3 +39,9 @@ class ColoringListServices(ServiceWithResult):
     @property
     def _colorings(self):
         return Coloring.objects.filter(theme_id=self.cleaned_data["id"]).order_by("id")
+
+    @lru_cache
+    def _update_rating(self):
+        theme = Theme.objects.get(id=self.cleaned_data["id"])
+        theme.rating += 1
+        theme.save()
