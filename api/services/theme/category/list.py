@@ -1,26 +1,26 @@
 import json
 
-from django import forms
 from django.core.paginator import Paginator
 from service_objects.services import ServiceWithResult
 
 from conf.settings.rest_framework import REST_FRAMEWORK
-from models_app.models import Coloring
+from models_app.models import Theme
+from django import forms
 
 
-class ColoringListServices(ServiceWithResult):
+class ThemeListByCategoryService(ServiceWithResult):
+    id = forms.IntegerField()
     page = forms.IntegerField(required=False, min_value=1)
     per_page = forms.IntegerField(required=False, min_value=1)
-    id = forms.IntegerField()
 
     def process(self):
-        self._paginated_colorings()
+        self._paginated_themes()
         return self
 
-    def _paginated_colorings(self):
-        page = self.cleaned_data.get('page') or 1
+    def _paginated_themes(self):
+        page = self.cleaned_data.get("page") or 1
         paginator = Paginator(
-            self._colorings,
+            self._themes,
             self.cleaned_data.get("per_page") or REST_FRAMEWORK["PAGE_SIZE"],
         )
         page_info = {
@@ -35,5 +35,5 @@ class ColoringListServices(ServiceWithResult):
         }
 
     @property
-    def _colorings(self):
-        return Coloring.objects.filter(theme_id=self.cleaned_data["id"]).order_by("id")
+    def _themes(self):
+        return Theme.objects.filter(category_id=self.cleaned_data["id"]).order_by("-updated_at")
