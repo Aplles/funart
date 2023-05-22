@@ -13,7 +13,6 @@ class ThemeAdmin(admin.ModelAdmin):
         "description",
         "rating",
         'image',
-        'category',
         "created_at",
         "updated_at",
     ]
@@ -22,4 +21,5 @@ class ThemeAdmin(admin.ModelAdmin):
         "name",
     )
     ordering = ("id", 'category', "created_at", "updated_at")
+    filter_horizontal = ['category',]
     inlines = [ColoringInline,]
