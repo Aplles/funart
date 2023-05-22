@@ -21,3 +21,8 @@ class ColoringAdmin(admin.ModelAdmin):
         "name",
     )
     ordering = ("id", "theme", "created_at", "updated_at")
+
+
+class ColoringInline(admin.TabularInline):
+    model = Coloring
+    extra = 10

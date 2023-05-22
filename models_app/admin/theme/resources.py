@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from models_app.models import Theme
+from models_app.admin.coloring.resources import ColoringInline
 
 
 @admin.register(Theme)
@@ -21,3 +22,4 @@ class ThemeAdmin(admin.ModelAdmin):
         "name",
     )
     ordering = ("id", 'category', "created_at", "updated_at")
+    inlines = [ColoringInline,]
