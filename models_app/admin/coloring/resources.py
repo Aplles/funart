@@ -1,6 +1,15 @@
 from django.contrib import admin
 
-from models_app.models import Coloring
+from models_app.models import Coloring, Theme
+from django import forms
+
+
+class ThemeFormAdmin(forms.ModelForm):
+    theme = forms.ModelChoiceField(queryset=Theme.objects.all().distinct("id"), label="Тема")
+
+    class Meta:
+        model = Coloring
+        fields = '__all__'
 
 
 @admin.register(Coloring)
@@ -11,7 +20,6 @@ class ColoringAdmin(admin.ModelAdmin):
         "name",
         "image",
         "type",
-        "theme",
         "created_at",
         "updated_at",
     ]
@@ -21,8 +29,4 @@ class ColoringAdmin(admin.ModelAdmin):
         "name",
     )
     ordering = ("id", "theme", "created_at", "updated_at")
-
-
-class ColoringInline(admin.TabularInline):
-    model = Coloring
-    extra = 10
+    form = ThemeFormAdmin

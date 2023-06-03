@@ -1,7 +1,11 @@
 from django.contrib import admin
 
-from models_app.models import Theme
-from models_app.admin.coloring.resources import ColoringInline
+from models_app.models import Theme, Coloring
+
+
+class ColoringInline(admin.TabularInline):
+    model = Coloring
+    extra = 10
 
 
 @admin.register(Theme)
@@ -21,5 +25,9 @@ class ThemeAdmin(admin.ModelAdmin):
         "name",
     )
     ordering = ("id", 'category', "created_at", "updated_at")
-    filter_horizontal = ['category',]
-    inlines = [ColoringInline,]
+    filter_horizontal = ['category', ]
+    inlines = [ColoringInline, ]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.all().distinct('id')

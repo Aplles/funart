@@ -1,9 +1,9 @@
 from django.urls import path
 
 
-from api.views.theme import ThemeListView, ThemeListByCategoryView
+from api.views.theme import ThemeListView, ThemeListByCategoryView, ThemeListBySearchView
 from api.views.category import CategoryListView
-from api.views.coloring import ColoringListView, ColoringListBySearchView
+from api.views.coloring import ColoringListView
 
 urlpatterns = [
     # Category
@@ -15,5 +15,5 @@ urlpatterns = [
     path('themes/<int:id>/colorings/', ColoringListView.as_view()),
 
     # Search
-    path('search/', ColoringListBySearchView.as_view()),
+    path('search/', ThemeListBySearchView.as_view()),
 ]

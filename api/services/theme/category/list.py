@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from service_objects.services import ServiceWithResult
 
 from conf.settings.rest_framework import REST_FRAMEWORK
-from models_app.models import Theme
+from models_app.models import Theme, Category
 from django import forms
 
 
@@ -36,4 +36,6 @@ class ThemeListByCategoryService(ServiceWithResult):
 
     @property
     def _themes(self):
-        return Theme.objects.filter(category_id=self.cleaned_data["id"]).order_by("-updated_at")
+        category = Category.objects.filter(id=self.cleaned_data["id"])
+        if category.exists():
+            return Theme.objects.filter(category__in=category).order_by("-updated_at")
