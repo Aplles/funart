@@ -97,3 +97,24 @@ THEME_LIST_VIEW = {
         )
     },
 }
+
+THEME_POPULAR_LIST_VIEW = {
+    "operation_id": "Список популярных тематик",
+    "operation_description": """
+        Выводит список популярных тематик
+    """,
+    "responses": {
+        status.HTTP_200_OK: openapi.Response(
+            "Success",
+            openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties=dict(
+                    themes=openapi.Schema(
+                        type=openapi.TYPE_ARRAY,
+                        **THEME_ITEM
+                    ),
+                ),
+            ),
+        )
+    },
+}

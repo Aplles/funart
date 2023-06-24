@@ -1,29 +1,22 @@
 from django.contrib import admin
 
-from models_app.models import Theme
-from models_app.models import Coloring
+from models_app.models import Theme, Coloring
 
 
-class ListColorings(admin.StackedInline):
+class ColoringInline(admin.TabularInline):
     model = Coloring
-    readonly_fields = ('id', 'created_at', 'updated_at',)
-    fieldsets = [
-        ("Information", {'fields': ['name', 'image', 'updated_at', 'created_at', ]}),
-    ]
-    extra = 0
+    extra = 10
 
 
 @admin.register(Theme)
 class ThemeAdmin(admin.ModelAdmin):
     list_filter = ('name', 'created_at')
-    inlines = (ListColorings,)
     list_display = [
         "id",
         "name",
         "description",
         "rating",
         'image',
-        'category',
         "created_at",
         "updated_at",
     ]
@@ -31,5 +24,10 @@ class ThemeAdmin(admin.ModelAdmin):
         "id",
         "name",
     )
-    readonly_fields = ("rating", )
     ordering = ("id", 'category', "created_at", "updated_at")
+    filter_horizontal = ['category', ]
+    inlines = [ColoringInline, ]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.all().distinct('id')

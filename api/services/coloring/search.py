@@ -6,7 +6,7 @@ from django.db.models import Q
 from service_objects.services import ServiceWithResult
 
 from conf.settings.rest_framework import REST_FRAMEWORK
-from models_app.models import Theme, Coloring
+from models_app.models import Theme, Coloring, Category
 
 
 class SearchServices(ServiceWithResult):
@@ -32,21 +32,17 @@ class SearchServices(ServiceWithResult):
         self.result = {
             'page_info': page_info,
             'object_list': paginator.page(page).object_list,
-            'page_range': json.dumps([str(p) for p in paginator.page_range]),
+            'page_range': ",".join([str(p) for p in paginator.page_range]),
         }
 
     @property
     def _search(self):
-        # themes = Theme.objects.filter(
-        #     Q(name__icontains=self.cleaned_data["search"]) |
-        #     Q(description__icontains=self.cleaned_data["search"]) |
-        #     Q(category__name__icontains=self.cleaned_data["search"]) |
-        #     Q(category__description__icontains=self.cleaned_data["search"])
-        # ).order_by("id")
-        return Coloring.objects.select_related('theme', 'theme__category').filter(
+        coloring = Coloring.objects.filter(
+            name__icontains=self.cleaned_data["search"]
+        ).values_list("theme", flat=True)
+        theme = Theme.objects.filter(
             Q(name__icontains=self.cleaned_data["search"]) |
-            Q(theme__name__icontains=self.cleaned_data["search"]) |
-            Q(theme__description__icontains=self.cleaned_data["search"]) |
-            Q(theme__category__name__icontains=self.cleaned_data["search"]) |
-            Q(theme__category__description__icontains=self.cleaned_data["search"])
-        ).order_by("id")
+            Q(description__icontains=self.cleaned_data["search"])|
+            Q(id__in=coloring)
+        )
+        return theme
