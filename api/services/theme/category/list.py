@@ -1,6 +1,8 @@
 import json
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+from service_objects.errors import NotFound
 from service_objects.services import ServiceWithResult
 
 from conf.settings.rest_framework import REST_FRAMEWORK
@@ -31,11 +33,19 @@ class ThemeListByCategoryService(ServiceWithResult):
         self.result = {
             'page_info': page_info,
             'object_list': paginator.page(page).object_list,
+            'category': self._category,
             'page_range': ",".join([str(p) for p in paginator.page_range]),
         }
 
     @property
+    def _category(self):
+        try:
+            return Category.objects.get(id=self.cleaned_data["id"])
+        except ObjectDoesNotExist:
+            raise NotFound(message="Такой категории не существует")
+
+    @property
     def _themes(self):
         category = Category.objects.filter(id=self.cleaned_data["id"])
-        if category.exists():
+        if self._category:
             return Theme.objects.filter(category__in=category).order_by("-updated_at")

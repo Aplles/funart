@@ -6,6 +6,7 @@ from service_objects.services import ServiceOutcome
 
 from api.docs.coloring import COLORING_LIST_BY_SEARCH_VIEW
 from api.docs.theme import THEME_BY_CATEGORY_LIST_VIEW, THEME_LIST_VIEW, THEME_POPULAR_LIST_VIEW
+from api.serializers.category.list import CategoryListSerializer
 from api.services.coloring.search import SearchServices
 from api.services.theme.category.list import ThemeListByCategoryService
 from api.services.theme.list import ThemeListServices
@@ -47,7 +48,8 @@ class ThemeListByCategoryView(APIView):
     def get(self, request, *args, **kwargs):
         outcome = ServiceOutcome(ThemeListByCategoryService, request.GET.dict() | kwargs)
         return Response({
-            "themes": ThemeListSerializer(outcome.result["object_list"], many=True).data,
+            'themes': ThemeListSerializer(outcome.result["object_list"], many=True).data,
+            'category': CategoryListSerializer(outcome.result["category"]).data,
             'page_data': outcome.result.get('page_range'),
             'page_info': outcome.result.get('page_info'),
         }, status=status.HTTP_200_OK)
