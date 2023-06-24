@@ -4,6 +4,7 @@ from api.serializers.theme.list import ThemeListSerializer
 
 
 class ColoringListSerializer(serializers.ModelSerializer):
+    theme = ThemeListSerializer(read_only=True)
 
     class Meta:
         model = Coloring
