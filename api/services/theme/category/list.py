@@ -31,7 +31,7 @@ class ThemeListByCategoryService(ServiceWithResult):
         self.result = {
             'page_info': page_info,
             'object_list': paginator.page(page).object_list,
-            'page_range': json.dumps([str(p) for p in paginator.page_range]),
+            'page_range': ",".join([str(p) for p in paginator.page_range]),
         }
 
     @property
