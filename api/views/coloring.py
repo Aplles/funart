@@ -5,8 +5,10 @@ from rest_framework.views import APIView
 from service_objects.services import ServiceOutcome
 
 from api.docs.coloring import COLORING_LIST_VIEW
+from api.serializers.theme.list import ThemeListSerializer
 from api.services.coloring.list import ColoringListServices
 from api.serializers.coloring.list import ColoringListSerializer
+from models_app.models import Theme
 
 
 class ColoringListView(APIView):
@@ -19,6 +21,9 @@ class ColoringListView(APIView):
                 "colorings": ColoringListSerializer(outcome.result.get('object_list'), many=True).data,
                 'page_data': outcome.result.get('page_range'),
                 'page_info': outcome.result.get('page_info'),
+                'theme': ThemeListSerializer(
+                    Theme.objects.get(id=kwargs['id'])
+                ).data,
             },
             status=status.HTTP_200_OK
         )

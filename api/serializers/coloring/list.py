@@ -4,7 +4,6 @@ from api.serializers.theme.list import ThemeListSerializer
 
 
 class ColoringListSerializer(serializers.ModelSerializer):
-    theme = ThemeListSerializer(read_only=True)
 
     class Meta:
         model = Coloring
@@ -13,5 +12,4 @@ class ColoringListSerializer(serializers.ModelSerializer):
             'name',
             'image',
             'type',
-            'theme',
         )
