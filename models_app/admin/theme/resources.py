@@ -24,10 +24,6 @@ class ThemeAdmin(admin.ModelAdmin):
         "id",
         "name",
     )
-    ordering = ("id", 'category', "created_at", "updated_at")
+    ordering = ("id", "created_at", "updated_at")
     filter_horizontal = ['category', ]
     inlines = [ColoringInline, ]
-
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.all().distinct('id')
