@@ -69,6 +69,7 @@ THEME_LIST_VIEW = {
 
         page - номер страницы (по умолчанию 1)
         per_page - сколько элементов на странице (по умолчанию 8)
+        language - язык для фильтрации тематик. Языки: English, Deutsch, Español, Português, Français, Italiano, Polski, Русский
     """,
     'manual_parameters': [
         openapi.Parameter('page', openapi.IN_QUERY,
@@ -79,6 +80,10 @@ THEME_LIST_VIEW = {
                           description="Вы можете выбрать количество тематик на странице",
                           type=openapi.TYPE_NUMBER,
                           required=False),
+        openapi.Parameter('language', openapi.IN_QUERY,
+                          description="Вы можете указать язык, для которого хотите получить тематики",
+                          type=openapi.TYPE_STRING,
+                          required=True),
     ],
     "responses": {
         status.HTTP_200_OK: openapi.Response(
