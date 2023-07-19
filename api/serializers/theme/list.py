@@ -12,6 +12,7 @@ class ThemeListSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'image',
+            'popular_image',
             'rating',
             'language'
         )
