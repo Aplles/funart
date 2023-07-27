@@ -119,3 +119,15 @@ COLORING_GET_VIEW = {
         )
     },
 }
+
+COLORING_DOWNLOAD_VIEW = {
+    "operation_id": "Скачивание раскраски",
+    "operation_description": """
+        Отдаёт jpeg файл по id раскраски
+    """,
+    "responses": {
+        status.HTTP_200_OK: openapi.Response(
+            "Success",
+        )
+    },
+}

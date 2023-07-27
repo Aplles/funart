@@ -1,5 +1,6 @@
 import io
 from functools import lru_cache
+from pytils.translit import slugify
 
 from PIL import Image
 from django.http import HttpResponse
@@ -32,5 +33,5 @@ class ColoringDownloadService(ServiceWithResult):
             self._image_byte(self._coloring),
             content_type="image/jpeg"
         )
-        response["Content-Disposition"] = f"attachment; filename={self._coloring.name}.jpeg"
+        response["Content-Disposition"] = f"attachment; filename={slugify(self._coloring.name)}.jpeg"
         return response
