@@ -6,6 +6,7 @@ from service_objects.services import ServiceOutcome
 
 from api.docs.coloring import COLORING_LIST_VIEW
 from api.serializers.theme.list import ThemeListSerializer
+from api.services.coloring.download import ColoringDownloadService
 from api.services.coloring.list import ColoringListServices
 from api.serializers.coloring.list import ColoringListSerializer
 from models_app.models import Theme
@@ -27,3 +28,10 @@ class ColoringListView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
+
+class ColoringDownloadView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        outcome = ServiceOutcome(ColoringDownloadService, kwargs)
+        return outcome.result
