@@ -4,9 +4,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from service_objects.services import ServiceOutcome
 
-from api.docs.coloring import COLORING_LIST_VIEW
+from api.docs.coloring import COLORING_LIST_VIEW, COLORING_GET_VIEW
 from api.serializers.theme.list import ThemeListSerializer
 from api.services.coloring.download import ColoringDownloadService
+from api.services.coloring.get import ColoringGetServices
 from api.services.coloring.list import ColoringListServices
 from api.serializers.coloring.list import ColoringListSerializer
 from models_app.models import Theme
@@ -35,3 +36,17 @@ class ColoringDownloadView(APIView):
     def get(self, request, *args, **kwargs):
         outcome = ServiceOutcome(ColoringDownloadService, kwargs)
         return outcome.result
+
+
+class ColoringDetailView(APIView):
+
+    @swagger_auto_schema(**COLORING_GET_VIEW)
+    def get(self, request, *args, **kwargs):
+        outcome = ServiceOutcome(ColoringGetServices, kwargs)
+        return Response(
+            ColoringListSerializer(
+                outcome.result,
+                many=False
+            ).data,
+            status=status.HTTP_200_OK
+        )

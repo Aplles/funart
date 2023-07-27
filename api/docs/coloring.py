@@ -101,3 +101,21 @@ COLORING_LIST_BY_SEARCH_VIEW = {
         )
     },
 }
+
+COLORING_GET_VIEW = {
+    "operation_id": "Получение раскраски",
+    "operation_description": """
+        Выводит раскраску по ее id
+
+        id - id желаемой раскраски
+    """,
+    "responses": {
+        status.HTTP_200_OK: openapi.Response(
+            "Success",
+            openapi.Schema(
+                type=openapi.TYPE_ARRAY,
+                **COLORING_ITEM
+            ),
+        )
+    },
+}
