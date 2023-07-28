@@ -6,11 +6,26 @@ from service_objects.services import ServiceOutcome
 
 from api.docs.coloring import COLORING_LIST_VIEW, COLORING_GET_VIEW, COLORING_DOWNLOAD_VIEW
 from api.serializers.theme.list import ThemeListSerializer
+from api.services.coloring.all_list import ColoringAllListServices
 from api.services.coloring.download import ColoringDownloadService
 from api.services.coloring.get import ColoringGetServices
 from api.services.coloring.list import ColoringListServices
 from api.serializers.coloring.list import ColoringListSerializer
 from models_app.models import Theme
+
+
+class ColoringAllDetailView(APIView):
+
+    @swagger_auto_schema()
+    def get(self, request, *args, **kwargs):
+        outcome = ServiceOutcome(ColoringAllListServices, {})
+        return Response(
+            ColoringListSerializer(
+                outcome.result,
+                many=True
+            ).data,
+            status=status.HTTP_200_OK
+        )
 
 
 class ColoringListView(APIView):
