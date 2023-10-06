@@ -5,16 +5,17 @@ from rest_framework.views import APIView
 from service_objects.services import ServiceOutcome
 
 from api.docs.coloring import COLORING_LIST_BY_SEARCH_VIEW
-from api.docs.theme import THEME_BY_CATEGORY_LIST_VIEW, THEME_LIST_VIEW, THEME_POPULAR_LIST_VIEW
+from api.docs.theme import THEME_BY_CATEGORY_LIST_VIEW, THEME_LIST_VIEW, THEME_POPULAR_LIST_VIEW, THEME_CREATE_VIEW
 from api.serializers.category.list import CategoryListSerializer
 from api.services.coloring.search import SearchServices
 from api.services.theme.category.list import ThemeListByCategoryService
+from api.services.theme.create import ThemeCreateServices
 from api.services.theme.list import ThemeListServices
 from api.serializers.theme.list import ThemeListSerializer
 from api.services.theme.popular import ThemePopularListServices
 
 
-class ThemeListView(APIView):
+class ThemeListCreateView(APIView):
 
     @swagger_auto_schema(**THEME_LIST_VIEW)
     def get(self, request, *args, **kwargs):
@@ -26,6 +27,14 @@ class ThemeListView(APIView):
                 'page_info': outcome.result.get('page_info'),
             },
             status=status.HTTP_200_OK
+        )
+
+    @swagger_auto_schema(**THEME_CREATE_VIEW)
+    def post(self, request, *args, **kwargs):
+        outcome = ServiceOutcome(ThemeCreateServices, request.POST.dict(), {'image': request.data.get('image')})
+        return Response(
+            ThemeListSerializer(outcome.result, many=False).data,
+            status=status.HTTP_201_CREATED
         )
 
 

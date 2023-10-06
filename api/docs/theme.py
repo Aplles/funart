@@ -123,3 +123,18 @@ THEME_POPULAR_LIST_VIEW = {
         )
     },
 }
+
+THEME_CREATE_VIEW = {
+    "operation_id": "Создание тематики",
+    'manual_parameters': [
+        openapi.Parameter('name', openapi.IN_QUERY,
+                          type=openapi.TYPE_STRING,
+                          required=True),
+        openapi.Parameter('description', openapi.IN_QUERY,
+                          type=openapi.TYPE_STRING,
+                          required=True),
+        openapi.Parameter('image', openapi.IN_QUERY,
+                          type=openapi.TYPE_FILE,
+                          required=True),
+    ],
+}
