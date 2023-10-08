@@ -31,7 +31,7 @@ class ThemeListCreateView(APIView):
 
     @swagger_auto_schema(**THEME_CREATE_VIEW)
     def post(self, request, *args, **kwargs):
-        outcome = ServiceOutcome(ThemeCreateServices, request.POST.dict(), {'image': request.data.get('image')})
+        outcome = ServiceOutcome(ThemeCreateServices, request.data.dict(), {'image': request.data.get('image')})
         return Response(
             ThemeListSerializer(outcome.result, many=False).data,
             status=status.HTTP_201_CREATED

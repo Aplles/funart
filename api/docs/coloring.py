@@ -131,3 +131,15 @@ COLORING_DOWNLOAD_VIEW = {
         )
     },
 }
+
+COLORING_CREATE_VIEW = {
+    "operation_id": "Создание раскрасок",
+    'manual_parameters': [
+        openapi.Parameter('name', openapi.IN_QUERY,
+                          type=openapi.TYPE_STRING,
+                          required=True),
+        openapi.Parameter('image', openapi.IN_QUERY,
+                          type=openapi.TYPE_FILE,
+                          required=True),
+    ],
+}
