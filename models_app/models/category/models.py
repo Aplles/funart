@@ -4,7 +4,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Категория')
-    description = models.CharField(max_length=255, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 

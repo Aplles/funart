@@ -15,7 +15,7 @@ class Theme(models.Model):
     )
 
     name = models.CharField(max_length=255, verbose_name='Тематика')
-    description = models.CharField(max_length=255, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     image = models.ImageField(upload_to="themes/", verbose_name="Картинка темы")
     popular_image = models.ImageField(upload_to="themes/", verbose_name="Картинка темы для популярных")
     rating = models.IntegerField(default=0, verbose_name="Посещаемость")
