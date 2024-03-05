@@ -36,4 +36,4 @@ class ThemeListServices(ServiceWithResult):
 
     @property
     def _themes(self):
-        return Theme.objects.filter(language=self.cleaned_data['language']).order_by("id")
+        return Theme.objects.filter(language=self.cleaned_data['language']).order_by("-id")

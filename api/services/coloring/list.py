@@ -38,7 +38,7 @@ class ColoringListServices(ServiceWithResult):
 
     @property
     def _colorings(self):
-        return Coloring.objects.filter(theme_id=self.cleaned_data["id"]).order_by("id")
+        return Coloring.objects.filter(theme_id=self.cleaned_data["id"]).order_by("-id")
 
     @lru_cache
     def _update_rating(self):
